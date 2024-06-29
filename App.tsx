@@ -1,5 +1,4 @@
 import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -8,6 +7,15 @@ import {
   Text,
   View,
 } from 'react-native';
+// FORM VALIDATION
+import * as Yup from 'yup';
+
+const PasswordSchema = Yup.object().shape({
+  passwordLength: Yup.number()
+    .min(4, 'Should be minimum of 4 characters!')
+    .max(15, 'should be less than 15 characters!')
+    .required('Length is required'),
+});
 
 function App(): React.JSX.Element {
   return (
