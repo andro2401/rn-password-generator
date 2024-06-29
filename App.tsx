@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 // FORM VALIDATION
 import * as Yup from 'yup';
-import {string} from 'yup';
 
 const PasswordSchema = Yup.object().shape({
   passwordLength: Yup.number()
@@ -26,7 +25,32 @@ function App(): React.JSX.Element {
   const [numbers, setNumbers] = useState(false);
   const [symbols, setSymbols] = useState(false);
 
-  const generatePassword = (passwordLength: number) => {};
+  const generatePassword = (passwordLength: number) => {
+    let characterList = '';
+
+    const upperCaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWYZ';
+    const lowerCaseChars = 'abcdefghijklmnopqrstuvwyz';
+    const numberChars = '1234567890';
+    const symbolChars = '!#"$%&/()=?@';
+
+    if (upperCase) {
+      characterList += upperCase;
+    }
+    if (lowerCase) {
+      characterList += lowerCase;
+    }
+    if (numbers) {
+      characterList += numbers;
+    }
+    if (symbols) {
+      characterList += symbols;
+    }
+
+    const passwordResult = createPassword(characterList, passwordLength);
+
+    setPassword(passwordResult);
+    setIsPassGenerated(true);
+  };
   const createPassword = (characters: string, passwordLength: number) => {
     let result = '';
 
@@ -36,7 +60,14 @@ function App(): React.JSX.Element {
     }
     return result;
   };
-  const resetPassword = () => {};
+  const resetPassword = () => {
+    setPassword('');
+    setIsPassGenerated(false);
+    setLowerCase(true);
+    setUpperCase(false);
+    setNumbers(false);
+    setSymbols(false);
+  };
 
   return (
     <SafeAreaView>
